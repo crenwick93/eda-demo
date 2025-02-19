@@ -1,0 +1,7 @@
+key_name: "chris-aws"
+instance_type: "t2.micro"
+security_groups:
+  - "launch-wizard-3"
+image_id: "ami-0f9535ac605dc21d5"
+region: "eu-west-2"
+subnet_id: "subnet-0ba9958ce9570c5f3"

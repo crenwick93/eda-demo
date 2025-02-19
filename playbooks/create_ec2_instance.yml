@@ -1,0 +1,35 @@
+---
+- name: Launch an EC2 instance in AWS
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    # - name: Launch EC2 instance
+    #   amazon.aws.ec2_instance:
+    #     name: "test-ec2"
+    #     key_name: "{{ key_name }}"
+    #     instance_type: "{{ instance_type }}"
+    #     security_groups: "{{ security_groups }}"
+    #     image_id: "{{ ami_id }}"
+    #     region: "{{ region }}"
+    #     subnet_id: "{{ subnet_id }}"
+    #     network:
+    #       assign_public_ip: true
+    #     wait: true
+    #   register: ec2_instance
+
+    - name: Start an instance with a public IP address
+      amazon.aws.ec2_instance:
+        name: "public-compute-instance"
+        key_name: "chris-aws"
+        vpc_subnet_id: subnet-0ba9958ce9570c5f3
+        instance_type: t2.micro
+        security_group: launch-wizard-3
+        network_interfaces:
+          - assign_public_ip: true
+        image_id: ami-0f9535ac605dc21d5
+        tags:
+          Environment: Testing
+
+    - name: Show instance details
+      debug:
+        msg: "EC2 Instance Created: ID {{ ec2_instance.instance_ids[0] }} in Region {{ region }}"
