@@ -24,8 +24,8 @@
         vpc_subnet_id: subnet-0ba9958ce9570c5f3
         instance_type: t2.micro
         security_group: launch-wizard-3
-        network:
-          - assign_public_ip: true
+        # network:
+        #   assign_public_ip: true
         image_id: ami-0f9535ac605dc21d5
         volumes:
           - device_name: /dev/sda1
