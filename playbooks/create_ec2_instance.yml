@@ -27,6 +27,11 @@
         network_interfaces:
           - assign_public_ip: true
         image_id: ami-0f9535ac605dc21d5
+        volumes:
+          - device_name: /dev/sda1
+            ebs:
+              volume_size: 20
+              delete_on_termination: true
         tags:
           Environment: Testing
 
