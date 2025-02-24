@@ -1,0 +1,8 @@
+---
+- name: Launch an EC2 instance in AWS
+  hosts: kafka
+  gather_facts: false
+  tasks:
+    - name: Setup kafka
+      ansible.builtin.include_role:
+        name: manage_kafka_demo

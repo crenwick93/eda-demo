@@ -1,0 +1,7 @@
+---
+# tasks file for manage_kafka_demo
+- name: Create Virtual machine
+  ansible.builtin.include_tasks: create_vm.yml
+
+- name: Download and install kafka on VM
+  ansible.builtin.include_tasks: download_install.yml

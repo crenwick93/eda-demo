@@ -1,0 +1,14 @@
+---
+- name: Rulebook test
+  hosts: all
+  sources:
+    - ansible.eda.webhook:
+      port: 5000
+
+  rules:
+    - name: "trigger on new message"
+      condition: event.body != ""
+      action:
+        run_workflow_template:
+          name: Demo Job Template
+          organization: Default

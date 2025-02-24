@@ -1,0 +1,5 @@
+---
+# defaults file for manage_kafka_demo
+manage_kafka_demo_base_url: "https://www-eu.apache.org/dist/kafka"
+manage_kafka_demo_scala_version: "2.13" # "Kafka Scala" typically refers to the version of Scala that a particular Kafka binary distribution is built against.
+manage_kafka_demo_install_dir: "/opt"

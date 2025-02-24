@@ -1,0 +1,41 @@
+- name: Retrieve Kafka releases page
+  ansible.builtin.uri:
+    url: "{{ manage_kafka_demo_base_url }}/"
+    return_content: true
+  register: kafka_releases
+
+- name: Extract version directories from the releases page
+  ansible.builtin.set_fact:
+    kafka_versions: "{{ kafka_releases.content | regex_findall('href=\"([0-9]+\\.[0-9]+\\.[0-9]+)/\"') }}"
+
+- name: Debug available Kafka versions
+  ansible.builtin.debug:
+    var: kafka_versions
+
+- name: Determine latest Kafka version
+  ansible.builtin.set_fact:
+    kafka_latest_version: "{{ kafka_versions | sort(reverse=true) | first }}"
+
+- name: Set Kafka tarball filename
+  ansible.builtin.set_fact:
+    kafka_filename: "kafka_{{ manage_kafka_demo_scala_version }}-{{ kafka_latest_version }}.tgz"
+
+- name: Set Kafka tarball URL
+  ansible.builtin.set_fact:
+    kafka_url: "{{ manage_kafka_demo_base_url }}/{{ kafka_latest_version }}/{{ kafka_filename }}"
+
+- name: Debug latest Kafka version and download URL
+  ansible.builtin.debug:
+    msg: "Latest Kafka version is {{ kafka_latest_version }}, URL: {{ kafka_url }}"
+
+- name: Ensure destination directory exists
+  ansible.builtin.file:
+    path: "{{ manage_kafka_demo_install_dir }}"
+    state: directory
+    mode: '0755'
+
+- name: Download the Kafka tarball
+  ansible.builtin.get_url:
+    url: "{{ kafka_url }}"
+    dest: "{{ manage_kafka_demo_install_dir }}/{{ kafka_filename }}"
+    mode: '0644'
